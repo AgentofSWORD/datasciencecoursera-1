@@ -1,5 +1,5 @@
 ## Write the following functions:
-  
+
 # 1.makeCacheMatrix: This function creates a special "matrix" object that can cache 
 # its inverse.
 # makeCacheMatrix(): creates a special "matrix" object that can cache its inverse
@@ -8,17 +8,18 @@
 # set_inv_matrix(): set the value of the inverse
 # get_inv_matrix(): get the value of the inverse
 
-makeCacheMatrix <- function(x = matrix()) {
-  inv_m <- NULL
+makeCacheMatrix <- function(x = numeric()) {
+  m <- null
   set <- function(y) {
     x <<- y
+    inv <- NULL
   }
   get <- function() x
-  set_inv_matrix <- function(inversematrix) inv_matrix <<- inversematrix
-  get_inv_matrix <- function() inv_matrix
+  setinverse <- function(inverse) inv <<- inverse
+  getinvesre <- function() inv
   list(set = set, get = get,
-       set_inv_matrix = set_inv_matrix,
-       get_inv_matrix = get_inv_matrix)
+       setinverse = setinverse,
+       getinverse = getinverse)
 }
 
 
@@ -28,13 +29,24 @@ makeCacheMatrix <- function(x = matrix()) {
 # inverse from the cache.
 
 cachesolve <- function(x, ...) {
-  inv_matrix <- x$get_inv_matrix()
-  if(!is.null(get_inv_matrix)) {
+  m <- x$getinverse()
+  if(!is.null(inv)) {
     message("getting cached data")
-    return(inv_matrix)
+    return(inv)
   }
   data <- x$get()
-  inv_matrix <- solve(data)
-  x$set_inv_matrix(inv_matrix)
-  inv_matrix
+  inv <- solve(data, ...)
+  x$setinverse(inv)
+  inv
 }
+
+
+# Trying to see if the function worked or not
+sMatrix <- makeCacheMatrix(matrix(c(9, 18, 27, 36), nrow = 2))
+sMatrix$get()
+sMatrix$inv ## getting the null value of invesre
+## Using this function to see if that works or not
+
+cachesolve(sMatrix)
+sMatrix$getinverse
+
